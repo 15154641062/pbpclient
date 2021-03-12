@@ -1,14 +1,4 @@
-package com.lxl.network;
-
-
-import android.accounts.NetworkErrorException;
-import android.content.Context;
-
-import com.lxl.network.beans.BaseResponse;
-
-import java.net.ConnectException;
-import java.net.UnknownHostException;
-import java.util.concurrent.TimeoutException;
+package com.lxl.network.base;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;

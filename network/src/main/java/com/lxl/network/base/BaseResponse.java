@@ -1,4 +1,4 @@
-package com.lxl.network.beans;
+package com.lxl.network.base;
 
 /**
  * 接口返回的实体基类

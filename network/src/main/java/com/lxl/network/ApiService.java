@@ -1,7 +1,6 @@
 package com.lxl.network;
 
-import com.lxl.network.beans.BaseResponse;
-import com.lxl.network.beans.TencentBaseResponse;
+import com.lxl.network.base.BaseResponse;
 
 import java.util.List;
 
@@ -25,12 +24,12 @@ public interface ApiService {
      */
     String HOST = "https://api.apiopen.top";        //接口地址
     @GET("/musicDetails")
-    Observable<BaseResponse<List<TencentBaseResponse>>> getMeiZi(@Query("id") String id);
+    Observable<BaseResponse<List<NewsChannelsBean>>> getMeiZi(@Query("id") String id);
 
     /**
      * post请求方式
      */
     @FormUrlEncoded         //post请求必须要申明该注解
     @POST("musicDetails")   //方法名
-    Observable<BaseResponse<List<TencentBaseResponse>>> getInfo(@Field("id") String data);//请求参数
+    Observable<BaseResponse<List<NewsChannelsBean>>> getInfo(@Field("id") String data);//请求参数
 }

@@ -1,14 +1,12 @@
 package com.lxl.network.utils;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 
 public class Base64Util {
 
-    public static String encode(String str) {
+    public static String encodeToBase64(String str) {
         try {
             return new Base64().encodeAsString(str.getBytes("utf-8"));
         } catch (UnsupportedEncodingException e) {
@@ -17,7 +15,7 @@ public class Base64Util {
         return null;
     }
 
-    public static String decode(String str) {
+    public static String base64Decode(String str) {
         return new String(new Base64().decode(str));
     }
 
@@ -38,53 +36,4 @@ public class Base64Util {
             32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
             48, 49, 50, 51, -1, -1, -1, -1, -1};
 
-    /*// 加密
-    public static String encode(String str) {
-        byte[] b = null;
-        String s = null;
-        try {
-            b = str.getBytes("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        if (b != null) {
-            s = new BASE64Encoder().encode(b);
-        }
-        return s;
-    }
-
-    // 解密
-    public static String decode(String s) {
-        byte[] b = null;
-        String result = null;
-        if (s != null) {
-            BASE64Decoder decoder = new BASE64Decoder();
-            try {
-                b = decoder.decodeBuffer(s);
-                result = new String(b, "utf-8");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
-    public static byte[] decodeImg(String imgStr) {
-        byte[] b = null;
-        if (!StringUtils.isNotBlank(imgStr)) {
-            return b;
-        }
-        try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            b = decoder.decodeBuffer(imgStr);
-            for (int i = 0; i < b.length; i++) {
-                if (b[i] < 0) {
-                    b[i] += 256;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return b;
-    }*/
 }

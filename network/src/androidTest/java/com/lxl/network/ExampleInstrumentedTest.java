@@ -5,11 +5,14 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.lxl.network.beans.BaseRequest;
-import com.lxl.network.beans.BaseResponse;
+import com.lxl.network.base.BaseObserver;
+import com.lxl.network.base.BaseRequest;
+import com.lxl.network.base.BaseResponse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -27,9 +30,9 @@ public class ExampleInstrumentedTest {
         assertEquals("com.lxl.network.test", appContext.getPackageName());
 
         BaseRequest.getService(ApiService.class)
-                .getDataByRxJava(0)
+                .getInfo("1")
                 //做线程切换的封装
-                .compose(BaseRequest.applyScheduler(new BaseObserver<BaseResponse>() {
+                .compose(BaseRequest.applyScheduler(new BaseObserver<List<NewsChannelsBean>>() {
                     @Override
                     protected void onSuccess(BaseResponse baseResponse) {
 

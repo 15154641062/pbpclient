@@ -2,11 +2,10 @@ package com.lxl.network;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.lxl.network.beans.TencentBaseResponse;
 
 import java.util.List;
 
-public class NewsChannelsBean extends TencentBaseResponse {
+public class NewsChannelsBean {
     @SerializedName("showApiResBody")
     @Expose
     public ShowApiResBody showApiResBody;
