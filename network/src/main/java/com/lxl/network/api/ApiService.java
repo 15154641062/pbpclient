@@ -1,5 +1,6 @@
-package com.lxl.network;
+package com.lxl.network.api;
 
+import com.lxl.network.NewsChannelsBean;
 import com.lxl.network.base.BaseResponse;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import retrofit2.http.Query;
  * 请求方法
  */
 public interface ApiService {
-    //https://api.apiopen.top/musicDetails?id=604392760  接口完整路径
     /**
      * get请求方式
      * @Query
@@ -32,4 +32,6 @@ public interface ApiService {
     @FormUrlEncoded         //post请求必须要申明该注解
     @POST("musicDetails")   //方法名
     Observable<BaseResponse<List<NewsChannelsBean>>> getInfo(@Field("id") String data);//请求参数
+
+
 }

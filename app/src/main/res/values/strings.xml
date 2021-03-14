@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">pbpclient</string>
+
+    <string name="homepage_text">首页</string>
+    <string name="mine_text">我的</string>
+
+    <array name="homepage_video_tab">
+        <item>快递代取@yunjiandi@0</item>
+        <item>食堂外送@yunjiandi@1</item>
+    </array>
 </resources>

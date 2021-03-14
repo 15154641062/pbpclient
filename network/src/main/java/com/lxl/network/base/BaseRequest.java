@@ -33,6 +33,7 @@ public class BaseRequest {
                 .writeTimeout(20, TimeUnit.SECONDS)                        // 设置写入数据超时时间
                 .addInterceptor(CommonResponseInterceptor.LogInterceptor())          // 绑定日志拦截器
                 .addNetworkInterceptor(new CommonRequestInterceptor())               // 绑定header拦截器
+                .addNetworkInterceptor(new CommonResponseInterceptor())               // 绑定response拦截器
                 .build();
     }
 

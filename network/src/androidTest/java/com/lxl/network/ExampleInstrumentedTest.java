@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.lxl.network.api.ApiService;
 import com.lxl.network.base.BaseObserver;
 import com.lxl.network.base.BaseRequest;
 import com.lxl.network.base.BaseResponse;
@@ -37,6 +38,7 @@ public class ExampleInstrumentedTest {
                     protected void onSuccess(BaseResponse baseResponse) {
 
                     }
+
                     @Override
                     protected void onFailed(Throwable e) {
 
