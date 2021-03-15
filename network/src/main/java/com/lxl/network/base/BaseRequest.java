@@ -21,7 +21,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseRequest {
-    private static final String BASE_URL = "http://";
+    private static final String BASE_URL = "http://192.168.1.112:9090/";
 
     private static HashMap<String, Retrofit> retrofitMap = new HashMap<>();
 

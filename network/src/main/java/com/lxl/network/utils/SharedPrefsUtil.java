@@ -1,4 +1,4 @@
-package com.lxl.pbpclient.util;
+package com.lxl.network.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

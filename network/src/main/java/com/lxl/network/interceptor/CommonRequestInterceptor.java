@@ -7,9 +7,9 @@ import com.lxl.network.api.AuthenticateApiService;
 import com.lxl.network.base.BaseObserver;
 import com.lxl.network.base.BaseRequest;
 import com.lxl.network.base.BaseResponse;
-import com.lxl.pbpclient.activity.LoginActivity;
-import com.lxl.pbpclient.util.ApplicationUtil;
-import com.lxl.pbpclient.util.SharedPrefsUtil;
+/*import com.lxl.pbpclient.activity.LoginActivity;*/
+import com.lxl.network.utils.ApplicationUtil;
+import com.lxl.network.utils.SharedPrefsUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,8 +30,6 @@ public class CommonRequestInterceptor implements Interceptor {
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
 
-        Response response = chain.proceed(chain.request());
-
         Request.Builder builder = chain.request().newBuilder();
         builder.addHeader("os", OS);
         builder.addHeader("version", "1.0.0");
@@ -43,12 +41,14 @@ public class CommonRequestInterceptor implements Interceptor {
         if (!TextUtils.isEmpty(token)) {
             builder.addHeader("Authorization", token);
         }
+
+        Response response = chain.proceed(chain.request());
         //判断token是否过期
         if (isTokenExpired(response)) {
             //同步请求方式，获取最新的Token
             builder.header("Authorization", updateTokenByRefreshToken());
         }
-        return chain.proceed(builder.build());
+        return response;
     }
 
     /**
@@ -88,8 +88,8 @@ public class CommonRequestInterceptor implements Interceptor {
                     @Override
                     protected void onFailed(Throwable e) {
                         // 跳转登录界面
-                        Intent intent=new Intent(ApplicationUtil.getContext(), LoginActivity.class);
-                        ApplicationUtil.getContext().startActivity(intent);
+                        /*Intent intent=new Intent(ApplicationUtil.getContext(), LoginActivity.class);
+                        ApplicationUtil.getContext().startActivity(intent);*/
                     }
                 }));
         return SharedPrefsUtil.getStrFromSharedPrefs("token");

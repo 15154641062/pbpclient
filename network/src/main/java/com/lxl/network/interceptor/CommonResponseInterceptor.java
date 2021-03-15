@@ -2,7 +2,7 @@ package com.lxl.network.interceptor;
 
 import android.util.Log;
 
-import com.lxl.pbpclient.util.SharedPrefsUtil;
+import com.lxl.network.utils.SharedPrefsUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
