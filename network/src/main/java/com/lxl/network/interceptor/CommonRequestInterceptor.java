@@ -2,15 +2,16 @@ package com.lxl.network.interceptor;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.lxl.network.api.AuthenticateApiService;
 import com.lxl.network.base.BaseObserver;
 import com.lxl.network.base.BaseRequest;
 import com.lxl.network.base.BaseResponse;
-/*import com.lxl.pbpclient.activity.LoginActivity;*/
 import com.lxl.network.utils.ApplicationUtil;
 import com.lxl.network.utils.SharedPrefsUtil;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -35,20 +36,22 @@ public class CommonRequestInterceptor implements Interceptor {
         builder.addHeader("version", "1.0.0");
         builder.addHeader("contentType", "application/json;charset=UTF-8");
 
-        // 从本地SharedPreference获取token
-        String token = SharedPrefsUtil.getStrFromSharedPrefs("token");
+        if (!(chain.request().url().toString().contains("login")||chain.request().url().toString().contains("updateToken"))){
+            // 从本地SharedPreference获取token
+            String token = SharedPrefsUtil.getStrFromSharedPrefs("token");
 
-        if (!TextUtils.isEmpty(token)) {
-            builder.addHeader("Authorization", token);
+            if (!StringUtils.isEmpty(token)) {
+                builder.addHeader("Authorization", token);
+            }
+            Response response = chain.proceed(builder.build());
+            //判断token是否过期
+            if (isTokenExpired(response)) {
+                //同步请求方式，获取最新的Token
+                builder.header("Authorization", updateTokenByRefreshToken());
+            }
+            return response;
         }
-
-        Response response = chain.proceed(chain.request());
-        //判断token是否过期
-        if (isTokenExpired(response)) {
-            //同步请求方式，获取最新的Token
-            builder.header("Authorization", updateTokenByRefreshToken());
-        }
-        return response;
+        return chain.proceed(builder.build());
     }
 
     /**
@@ -58,7 +61,7 @@ public class CommonRequestInterceptor implements Interceptor {
      * @return
      */
     private boolean isTokenExpired(Response response) {
-        if (response.code() == 401) {
+        if (response.code() == 401 ) {
             return true;
         }
         return false;
@@ -79,14 +82,17 @@ public class CommonRequestInterceptor implements Interceptor {
                 .compose(BaseRequest.applyScheduler(new BaseObserver<HashMap<String,String>>() {
                     @Override
                     protected void onSuccess(BaseResponse<HashMap<String,String>> response) {
-                        if (response.getCode() == 0) {
+                        if (response.getCode() == 20000) {
                             SharedPrefsUtil.saveStrToSharedPrefs("token",response.getResults().get("token"));
                             SharedPrefsUtil.saveStrToSharedPrefs("refreshToken",response.getResults().get("refreshToken"));
+                            Log.d("TAG", "token: "+response.getResults().get("token"));
+                            Log.d("TAG", "refreshToken: "+response.getResults().get("refreshToken"));
                         }
                     }
 
                     @Override
                     protected void onFailed(Throwable e) {
+
                         // 跳转登录界面
                         /*Intent intent=new Intent(ApplicationUtil.getContext(), LoginActivity.class);
                         ApplicationUtil.getContext().startActivity(intent);*/

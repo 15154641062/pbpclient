@@ -18,6 +18,8 @@ import com.lxl.pbpclient.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import okhttp3.ResponseBody;
+
 public class LoginActivity extends BaseActivity {
 
     private EditText loginAccount;
@@ -52,18 +54,18 @@ public class LoginActivity extends BaseActivity {
         }
         BaseRequest.getService(AuthenticateApiService.class)
                 .toLogin(account,pwd)
-                .compose(BaseRequest.applyScheduler(new BaseObserver<String>() {
+                .compose(BaseRequest.applyScheduler(new BaseObserver() {
                     @Override
-                    protected void onSuccess(BaseResponse<String> response) {
+                    protected void onSuccess(BaseResponse response) {
                         // 跳转界面
-                        // showToastShortSync("登录成功");
+                        //showToastShortSync("登录成功");
                         Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
 
                     @Override
                     protected void onFailed(Throwable e) {
-                        // showToastShortSync("登录失败");
+                        //showToastShortSync("登录失败");
                         Log.d("TAG", "onFailed: "+e);
                     }
                 }));

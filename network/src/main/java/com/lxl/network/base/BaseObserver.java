@@ -1,5 +1,7 @@
 package com.lxl.network.base;
 
+import android.util.Log;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -17,6 +19,7 @@ public abstract class BaseObserver<T> implements Observer<BaseResponse<T>> {
 
     @Override
     public void onError(Throwable e) {
+        Log.d("TAG", "onError: "+e);
         onFailed(e);
     }
 

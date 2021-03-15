@@ -4,6 +4,7 @@ import com.lxl.network.errorhandler.ExceptionHandle;
 import com.lxl.network.errorhandler.HttpErrorHandler;
 import com.lxl.network.interceptor.CommonRequestInterceptor;
 import com.lxl.network.interceptor.CommonResponseInterceptor;
+import com.lxl.network.interceptor.NobodyConverterFactory;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +22,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseRequest {
-    private static final String BASE_URL = "http://192.168.1.112:9090/";
+    //private static final String BASE_URL = "http://192.168.1.112:9090/";
+    private static final String BASE_URL = "http://192.168.1.106:9090/";
+
 
     private static HashMap<String, Retrofit> retrofitMap = new HashMap<>();
 
@@ -45,6 +48,7 @@ public class BaseRequest {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(NobodyConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(getOkHttpClient())
@@ -65,8 +69,7 @@ public class BaseRequest {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
                 Observable<T> observable = upstream.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).map(BaseRequest.<T>getAppErrorHandler()).onErrorResumeNext(new HttpErrorHandler<T>());
-                ;
+                        .observeOn(AndroidSchedulers.mainThread());//.map(BaseRequest.<T>getAppErrorHandler()).onErrorResumeNext(new HttpErrorHandler<T>());
                 observable.subscribe(observer);
                 return observable;
             }

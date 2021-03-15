@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -29,5 +30,8 @@ public interface AuthenticateApiService {
      */
     @FormUrlEncoded
     @POST("login")
-    Observable<BaseResponse<String>> toLogin(@Field("username") String username,@Field("password") String password);
+    Observable<BaseResponse> toLogin(@Field("username") String username, @Field("password") String password);
+
+    @POST("article/hello")
+    Observable<BaseResponse<String>> hello();
 }
